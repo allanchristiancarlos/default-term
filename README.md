@@ -2,6 +2,10 @@
 WordPress Plugin that allows you to set a default term of a taxonomy
 
 ## Usage
+
+(IMPORTANT) Add a **default_term** key in your registration of taxonomy. 
+Then **DEACTIVATE** and **ACTIVATE** plugin to save the default term into the database.
+
 ```
 register_taxonomy( 'custom-tax', ['post'], [
 		'label'              => 'Custom Tag',
@@ -10,9 +14,6 @@ register_taxonomy( 'custom-tax', ['post'], [
 		'default_term'       => 'Uncategorized',
 	]);
 ```
-
-(!IMPORTANT) Add a **default_term** key in your registration of taxonomy. 
-Then deactivate and activate plugin to save the default term into the database.
 
 ## Whats in it
 * Saves the default term to the post
