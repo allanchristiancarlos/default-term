@@ -1,4 +1,4 @@
-# Default Term
+# Default Term (FOR DEVELOPERS ONLY)
 WordPress Plugin that allows you to set a default term of a taxonomy
 
 ## Usage
