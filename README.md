@@ -11,7 +11,7 @@ register_taxonomy( 'custom-tax', ['post'], [
 	]);
 ```
 
-Add a **default_term** key in your registration of taxonomy. 
+(!IMPORTANT) Add a **default_term** key in your registration of taxonomy. 
 Then deactivate and activate plugin to save the default term into the database.
 
 ## Whats in it
