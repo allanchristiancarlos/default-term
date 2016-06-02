@@ -3,7 +3,7 @@ WordPress Plugin that allows you to set a default term of a taxonomy
 
 ## Usage
 
-1. Install plugin download [here](https://github.com/allanchristiancarlos/default-term/archive/0.0.1.zip)
+1. Install plugin download [here](https://github.com/allanchristiancarlos/default-term/archive/master.zip)
 2. Add a **default_term** key in your registration of taxonomy. 
 3. (IMPORTANT) Then **DEACTIVATE** and **ACTIVATE** plugin to save the default term into the database.
 
