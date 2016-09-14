@@ -12,7 +12,7 @@ Text Domain: default-term
 
 /**
  * Installs the default taxonomy default terms
- * @return void 
+ * @return void
  */
 function default_term_install_terms()
 {
@@ -22,7 +22,7 @@ function default_term_install_terms()
 	foreach( $wp_taxonomies as $taxonomy_name => $taxonomy )
 	{
 		// Check if it has settings
-		if (!isset($taxonomy->default_term)) 
+		if (!isset($taxonomy->default_term))
 		{
 			continue;
 		}
@@ -30,7 +30,7 @@ function default_term_install_terms()
 		$term = $taxonomy->default_term;
 
 		// Check if the term already exists
-		if ($id = term_exists( $term, $taxonomy_name )) 
+		if ($id = term_exists( $term, $taxonomy_name ))
 		{
 			update_option( 'default_' . sanitize_key( $taxonomy_name ), $id['term_id'] );
 
@@ -44,7 +44,7 @@ function default_term_install_terms()
 			'slug' => sanitize_title( $slug )
 		));
 
-		if (is_wp_error($term)) 
+		if (is_wp_error($term))
 		{
 			continue;
 		}
@@ -63,20 +63,20 @@ function default_term_remove_delete_link()
 {
 	global $wp_taxonomies,$wp_post_types;
 
-	foreach ($wp_taxonomies as $taxonomy_name => $taxonomy) 
+	foreach ($wp_taxonomies as $taxonomy_name => $taxonomy)
 	{
 		// Check if it has settings
-		if (!isset($taxonomy->default_term)) 
+		if (!isset($taxonomy->default_term))
 		{
 			continue;
 		}
-		
+
 		add_filter( $taxonomy_name . '_row_actions', create_function('$actions, $term', '
 			if($term->term_id != default_term_get_default_term(\''. $taxonomy_name .'\'))
 			{
 				return $actions;
 			}
-			
+
 			unset($actions["delete"]);
 
 			return $actions;
@@ -102,16 +102,22 @@ function default_term_save_post($post_id, $post, $update)
 	global $wp_taxonomies, $wp_posttypes;
 
 	// Means post is not submmited
-	if (empty($_POST)) 
+	if (empty($_POST))
 	{
 		return;
 	}
 
-	foreach ((array)$_POST['tax_input'] as $taxonomy_name => $values) 
+	// Means post is submitted without the tax_input
+	if (!isset($_POST['tax_input']))
+	{
+		return;
+	}
+
+	foreach ((array)$_POST['tax_input'] as $taxonomy_name => $values)
 	{
 		$taxonomy = get_taxonomy( $taxonomy_name );
 
-		if (COUNT(array_filter($values)) > 0) 
+		if (COUNT(array_filter($values)) > 0)
 		{
 			continue;
 		}
@@ -119,16 +125,16 @@ function default_term_save_post($post_id, $post, $update)
 		$default_term = default_term_get_default_term( $taxonomy_name );
 
 		// If there is no default term then don't to anything
-		if (empty($default_term)) 
+		if (empty($default_term))
 		{
 			continue;
 		}
 
-		if (!$taxonomy->hierarchical) 
+		if (!$taxonomy->hierarchical)
 		{
 			$term = get_term( $default_term, $taxonomy_name );
 
-			if (is_wp_error($term)) 
+			if (is_wp_error($term))
 			{
 				continue;
 			}
@@ -137,7 +143,7 @@ function default_term_save_post($post_id, $post, $update)
 		}
 
 		// Don't force default term if the post is just an update
-		if ($post->post_modified != $post->post_date && isset($taxonomy->default_term_force) && !$taxonomy->default_term_force) 
+		if ($post->post_modified != $post->post_date && isset($taxonomy->default_term_force) && !$taxonomy->default_term_force)
 		{
 			continue;
 		}
@@ -151,7 +157,7 @@ function default_term_save_post($post_id, $post, $update)
 /**
  * Gets the default term id of the taxonomy
  * @param  string $taxonomy_name The slug of the taxonomy
- * @return int                
+ * @return int
  */
 function default_term_get_default_term($taxonomy_name)
 {
