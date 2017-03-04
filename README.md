@@ -48,3 +48,6 @@ register_taxonomy( 'custom-tax', ['post'], [
   
 ## Notes
 * Everytime you change a default term you need to deactivate and activate the plugin to save the terms to the database.
+
+## TODO
+* Add a backend UI for setting the default taxonomy term
